@@ -1,0 +1,71 @@
+@import url(https://fonts.googleapis.com/css2?family=Sora:wght@400;600&display=swap);
+*, body {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Sora', sans-serif;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 24px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    row-gap: 16px;
+    max-width: 800px;
+}
+
+.form__item {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    -moz-column-gap: 12px;
+         column-gap: 12px;
+}
+
+.form__item-label {
+    font-size: 28px;
+}
+
+.form__item-input {
+    padding: 10px 25px;
+    font-size: 24px;
+    border-radius: 5px;
+}
+
+.form__item-btn {
+    max-width: 800px;
+    width: 100%;
+    font-size: 18px;
+    background: transparent;
+    border: 1px solid teal;
+    border-radius: 15px;
+    padding: 15px;
+    text-align: center;
+    color: #2d3748;
+}
+
+.cut:hover {
+    cursor: pointer;
+    background: teal;
+    color: whitesmoke;
+}
+
+.copy:hover {
+    cursor: pointer;
+    background: whitesmoke;
+    color: teal;
+}
+
+.error {
+    font-size: 18px;
+    color: red;
+}
+
