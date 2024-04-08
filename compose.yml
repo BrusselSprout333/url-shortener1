@@ -1,0 +1,32 @@
+services:
+    php:
+        container_name: ${COMPOSE_PROJECT_NAME}_php
+        build:
+            context: ./docker
+        working_dir: /var/www/src
+        volumes:
+            - ./src/:/var/www/src/
+        networks:
+            - dev_net
+        command: php -S 0.0.0.0:80 -t public
+
+    mysql:
+        image: mysql
+        container_name: ${COMPOSE_PROJECT_NAME}_mysql
+        environment:
+            MYSQL_USER: ${MYSQL_USER}
+            MYSQL_DATABASE: ${MYSQL_DATABASE}
+            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+        networks:
+            - dev_net
+        volumes:
+            - mysql-data:/var/lib/mysql
+
+networks:
+    dev_net:
+        name: ${COMPOSE_PROJECT_NAME}_net
+
+volumes:
+    mysql-data:
+        name: ${COMPOSE_PROJECT_NAME}_mysql_data
