@@ -20,13 +20,14 @@ install: \
 	docker-initialize-mysql \
 	docker-up \
 	php-install-composer-packages \
+	php-run-migrations \
 	vue-build
 
 env-prepare:
 	@test -f .env || cp -n .env.example .env
 
 install-docker-compose-override:
-	@test -f compose.override.yml || cp -f compose.override.yml.example compose.override.yml
+	@test -f compose.override.yml || cp -n compose.override.yml.example compose.override.yml
 
 install-php-ini-files:
 	@test -f ./docker/php.ini || cp -n ./docker/php.ini.example ./docker/php.ini
@@ -46,12 +47,13 @@ docker-up:
 php-install-composer-packages:
 	docker exec url_shortener_php sh -c "composer update && composer install"
 
-#php-env-prepare:
-#	docker exec url_shortener_php cp -n .env.example .env
-#	docker exec url_shortener_php php artisan key:generate --ansi
+php-env-prepare:
+	@test -f .env || docker exec url_shortener_php cp -n .env.example .env
 
-#php-run-migrations:
-#	docker exec url_shortener_php php artisan migrate
+php-run-migrations:
+	docker exec url_shortener_php php bin/console doctrine:database:create --if-not-exists
+	docker exec url_shortener_php php bin/console make:migration
+	docker exec url_shortener_php php bin/console doctrine:migrations:migrate
 
 vue-build:
 	docker run --rm --workdir=/var/www/src -v ${current_dir}/src:/var/www/src node:alpine sh -c "yarn install && yarn dev"

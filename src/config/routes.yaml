@@ -4,14 +4,14 @@ index:
     defaults:
         template: 'create.html.twig'
 
-#redirect:
-#    path: /link/{identifier}
-#    controller: App\Controller\RedirectController::redirect
-#    requirements:
-#        identifier: '[A-Za-z0-9]{1,10}'
-#    methods: GET
-#
-#encode_route:
-#    path: /api/encode
-#    controller: App\Controller\ShortenerController::encode
-#    methods: POST
+redirect:
+    path: /link/{identifier}
+    controller: App\Controller\RedirectController::redirect_to
+    requirements:
+        identifier: '[A-Za-z0-9]{1,10}'
+    methods: GET
+
+encode_route:
+    path: /api/encode
+    controller: App\Controller\ShortenerController::encode
+    methods: POST

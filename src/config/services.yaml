@@ -1,18 +1,12 @@
-# This file is the entry point to configure your own services.
-# Files in the packages/ subdirectory configure your dependencies.
-
-# Put parameters here that don't need to change on each machine where the app is deployed
-# https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
+    google_safe_browsing_api_key: '%env(GOOGLE_SAFE_BROWSING_API_KEY)%'
+    google_safe_browsing_client_id: 'URL Shortener test task'
 
 services:
-    # default configuration for services in *this* file
     _defaults:
-        autowire: true      # Automatically injects dependencies in your services.
-        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        autowire: true
+        autoconfigure: true
 
-    # makes classes in src/ available to be used as services
-    # this creates a service per class whose id is the fully-qualified class name
     App\:
         resource: '../src/'
         exclude:
@@ -20,5 +14,27 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+    App\Services\Link\Converter:
+        arguments:
+            $baseUrl: '%env(SHORTENER_BASE_URL)%'
+    App\Services\Link\EncoderInterface: '@App\Services\Link\Converter'
+    App\Services\Link\DecoderInterface: '@App\Services\Link\Converter'
+
+    App\Services\Link\RepositoryInterface: '@App\Repository\ShortLinkRepository'
+
+    App\Services\SafeBrowsing\Client:
+        arguments:
+            $apiKey: '%google_safe_browsing_api_key%'
+            $clientId: '%google_safe_browsing_client_id%'
+
+    Psr\Http\Client\ClientInterface: '@App\Services\PSR\Http\Client\Adapter\Guzzle'
+
+    App\Services\PSR\Http\Client\Adapter\Guzzle:
+        arguments:
+            $guzzle: '@GuzzleHttp\Client'
+
+    GuzzleHttp\Client:
+        arguments:
+            $config:
+                timeout: 5
+                connect_timeout: 5
