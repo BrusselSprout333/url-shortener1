@@ -19,7 +19,7 @@ make clean
 
 ### /encode
 ```http request
-POST http://localhost:8080/encode
+POST http://localhost:8081/encode
 Content-Type: application/json
 
 {"url":  "https://example.com"}
@@ -27,7 +27,7 @@ Content-Type: application/json
 
 ### /decode
 ```http request
-GET http://localhost:8080/decode?url=[PREVIOUSLY ENCODED URL]
+GET http://localhost:8081/decode?url=[PREVIOUSLY ENCODED URL]
 ```
 
 ### How to test:
