@@ -5,12 +5,10 @@ declare(strict_types=1);
 namespace App\Repository;
 
 use App\Entity\Link;
-use App\Services\Link\DecoderException;
 use App\Services\Link\RepositoryInterface;
+use Doctrine\ORM\EntityManager;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-
-use Symfony\Component\HttpFoundation\Response;
 
 use function gmp_init;
 use function gmp_strval;
@@ -25,12 +23,12 @@ class ShortLinkRepository extends ServiceEntityRepository implements RepositoryI
 
     public function getByIdentifier(string $identifier): ?string
     {
-//        return Link::query()->where('identifier', $identifier)->first()?->url;
         return $this->findOneBy(['identifier' => $identifier])?->getUrl();
     }
 
     public function create(string $url): string
     {
+        /** @var EntityManager $entityManager */
         $entityManager = $this->doctrine->getManager();
 
         $urlHash = md5($url);

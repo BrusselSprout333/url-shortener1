@@ -3,46 +3,34 @@
 namespace App\Controller;
 
 use App\Services\Link\EncoderInterface;
+use App\Validator\LinkValidator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\Validation;
 use App\Services\SafeBrowsing\Api;
 
 class ShortenerController extends AbstractController
 {
+    public function __construct(
+        private readonly LinkValidator $validator
+    ) {
+    }
+
+    /**
+     * @throws \JsonException
+     */
     public function encode(Request $request, Api $safeBrowsingApi, EncoderInterface $encoder): JsonResponse
     {
-        $data = json_decode($request->getContent(), true);
+        $url = $this->validator->validateLink($request);
 
-        $validator = Validation::createValidator();
-
-        $constraints = new Assert\Collection([
-            'url' => [
-                new Assert\NotBlank(['message' => 'URL is required.']),
-                new Assert\Url(['message' => 'Invalid URL format.'])
-            ]
-        ]);
-
-        $violations = $validator->validate($data, $constraints);
-
-        if (count($violations) > 0) {
-            $errors = [];
-            foreach ($violations as $violation) {
-                $errors[] = $violation->getMessage();
-            }
-            return new JsonResponse(['errors' => $errors], Response::HTTP_BAD_REQUEST);
-        }
-
-        $found = $safeBrowsingApi->threatMatchesFind($data['url']);
+        $found = $safeBrowsingApi->threatMatchesFind($url);
 
         if ($found) {
             return new JsonResponse(null, Response::HTTP_FAILED_DEPENDENCY);
         }
 
-        $container = $encoder->encode($data['url']);
+        $container = $encoder->encode($url);
 
         return new JsonResponse($container, Response::HTTP_CREATED);
     }

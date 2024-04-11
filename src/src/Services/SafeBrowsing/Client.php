@@ -15,8 +15,8 @@ class Client
     protected string $apiUrl = '';
 
     public function __construct(
-        protected string $apiKey,
-        protected string $clientId,
+        protected readonly string $apiKey,
+        protected readonly string $clientId,
         protected ClientInterface $httpClient
     ) {
         $this->apiUrl = sprintf(

@@ -13,10 +13,7 @@ use Throwable;
 
 class Guzzle implements ClientInterface
 {
-    /**
-     * @var Client
-     */
-    protected $guzzle;
+    protected Client $guzzle;
 
     /**
      * Guzzle constructor.

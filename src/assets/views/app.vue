@@ -58,12 +58,10 @@ export default {
             const url = this.fields.url;
             if (regex.test(url)) {
                 axios.post('/api/encode', this.fields).then(response => {
-                    console.log(response.data);
                     this.fields = {url: response.data.url};
                     this.success = true;
                     this.error = null;
                     this.shortcutUrl = response.data.url;
-                    console.log(response.data.url);
                 }).catch(() => {
                     this.success = false;
                     this.error = 'Error';

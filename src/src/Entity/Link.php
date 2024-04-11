@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Link
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue(strategy: "AUTO")]
+    #[ORM\GeneratedValue]
     #[ORM\Column]
     private int $id;
 

@@ -19,6 +19,7 @@ install: \
 	docker-build \
 	docker-initialize-mysql \
 	docker-up \
+	php-env-prepare \
 	php-install-composer-packages \
 	php-run-migrations \
 	vue-build
@@ -44,15 +45,14 @@ docker-initialize-mysql:
 docker-up:
 	docker-compose up -d
 
+php-env-prepare:
+	@test -f src/.env || docker exec url_shortener_php cp -n .env.example .env
+
 php-install-composer-packages:
 	docker exec url_shortener_php sh -c "composer update && composer install"
 
-php-env-prepare:
-	@test -f .env || docker exec url_shortener_php cp -n .env.example .env
-
 php-run-migrations:
 	docker exec url_shortener_php php bin/console doctrine:database:create --if-not-exists
-	docker exec url_shortener_php php bin/console make:migration
 	docker exec url_shortener_php php bin/console doctrine:migrations:migrate
 
 vue-build:

@@ -19,8 +19,6 @@
         "core-js": "^3.9.1",
         "eslint": "^7.28.0",
         "eslint-plugin-vue": "^7.14.0",
-        "sass": "^1.32.11",
-        "sass-loader": "^11.0.1",
         "webpack-notifier": "^1.6.0"
     }
 }
