@@ -90,7 +90,8 @@
         "style-lint": "php-cs-fixer fix --dry-run --verbose --config=.php-cs-fixer.php",
         "style-fix": "php-cs-fixer fix --config=.php-cs-fixer.php",
         "phpstan": "XDEBUG_MODE=off phpstan analyse",
-        "test": "XDEBUG_MODE=off phpunit"
+        "test": "XDEBUG_MODE=off phpunit",
+        "coverage": "XDEBUG_MODE=coverage phpunit --coverage-text"
     },
     "conflict": {
         "symfony/symfony": "*"
