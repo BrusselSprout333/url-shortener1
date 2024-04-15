@@ -6,11 +6,11 @@ namespace App\Services\Link;
 
 use function sprintf;
 
-class Converter implements EncoderInterface, DecoderInterface
+readonly class Converter implements EncoderInterface, DecoderInterface
 {
     public function __construct(
-        protected string $baseUrl,
-        protected RepositoryInterface $repository
+        private string $baseUrl,
+        private RepositoryInterface $repository
     ) {
     }
 

@@ -11,20 +11,11 @@ use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Throwable;
 
-class Guzzle implements ClientInterface
+readonly class Guzzle implements ClientInterface
 {
-    /**
-     * @var Client
-     */
-    protected $guzzle;
-
-    /**
-     * Guzzle constructor.
-     * @param Client $guzzle
-     */
-    public function __construct(Client $guzzle)
-    {
-        $this->guzzle = $guzzle;
+    public function __construct(
+        private Client $guzzle
+    ) {
     }
 
     /**

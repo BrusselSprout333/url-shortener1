@@ -71,3 +71,4 @@ stop:
 clean:
 	docker-compose down -v
 	rm -rf .env ./src/.env ./src/vendor ./src/node_modules
+	git clean -fdx -e .idea

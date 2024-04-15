@@ -12,12 +12,12 @@ use Psr\Http\Message\ResponseInterface;
 
 class Client
 {
-    protected string $apiUrl = '';
+    private string $apiUrl;
 
     public function __construct(
-        protected string $apiKey,
-        protected string $clientId,
-        protected ClientInterface $httpClient
+        private readonly string $apiKey,
+        private readonly string $clientId,
+        private readonly ClientInterface $httpClient
     ) {
         $this->apiUrl = sprintf(
             'https://safebrowsing.googleapis.com/v4/threatMatches:find?key=%s',

@@ -6,10 +6,10 @@ namespace App\Services\Link;
 
 use JsonSerializable;
 
-class Container implements JsonSerializable
+readonly class Container implements JsonSerializable
 {
     public function __construct(
-        protected string $url
+        private string $url
     ) {
     }
 

@@ -6,10 +6,10 @@ use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
 use UnexpectedValueException;
 
-class Api
+readonly class Api
 {
     public function __construct(
-        protected Client $client
+        private Client $client
     ) {
     }
 

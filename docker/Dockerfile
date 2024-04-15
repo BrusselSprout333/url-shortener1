@@ -1,4 +1,4 @@
-FROM php:alpine
+FROM php:8.3-alpine
 
 #
 # Scripts build time
