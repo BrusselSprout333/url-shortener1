@@ -6,13 +6,13 @@ use App\Services\PSR\Http\Client\Adapter\Guzzle;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\BadResponseException;
 use Psr\Http\Client\ClientExceptionInterface;
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class GuzzleAdapterTest extends KernelTestCase
 {
-    public function test_send__guzzle_request(): void
+    public function testSendGuzzleRequest(): void
     {
         $guzzleMock = $this->createMock(Client::class);
         $guzzleAdapter = new Guzzle($guzzleMock);
@@ -29,7 +29,7 @@ class GuzzleAdapterTest extends KernelTestCase
         $this->assertSame($responseMock, $response);
     }
 
-    public function tests_guzzle_bad_response(): void
+    public function testsGuzzleBadResponse(): void
     {
         $guzzleMock = $this->createMock(Client::class);
         $guzzleAdapter = new Guzzle($guzzleMock);
@@ -46,7 +46,7 @@ class GuzzleAdapterTest extends KernelTestCase
         $this->assertInstanceOf(ResponseInterface::class, $response);
     }
 
-    public function tests_guzzle_client_error(): void
+    public function testsGuzzleClientError(): void
     {
         $guzzleMock = $this->createMock(Client::class);
         $guzzleAdapter = new Guzzle($guzzleMock);

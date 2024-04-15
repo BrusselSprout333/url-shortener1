@@ -4,8 +4,8 @@ namespace App\Validator;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Validation;
 
 class LinkValidator
 {
@@ -21,8 +21,8 @@ class LinkValidator
         $constraints = new Assert\Collection([
             'url' => [
                 new Assert\NotBlank(['message' => 'URL is required.']),
-                new Assert\Url(['message' => 'Invalid URL format.'])
-            ]
+                new Assert\Url(['message' => 'Invalid URL format.']),
+            ],
         ]);
 
         $violations = $validator->validate($data, $constraints);

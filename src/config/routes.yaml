@@ -6,7 +6,7 @@ index:
 
 redirect:
     path: /link/{identifier}
-    controller: App\Controller\RedirectController::redirect_to
+    controller: App\Controller\RedirectController::redirectTo
     requirements:
         identifier: '[A-Za-z0-9]{1,10}'
     methods: GET

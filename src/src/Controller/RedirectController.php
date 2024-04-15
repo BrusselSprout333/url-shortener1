@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class RedirectController extends AbstractController
 {
-    public function redirect_to(string $identifier, DecoderInterface $decoder): RedirectResponse|Response
+    public function redirectTo(string $identifier, DecoderInterface $decoder): RedirectResponse|Response
     {
         try {
             $container = $decoder->decode($identifier);

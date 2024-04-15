@@ -6,12 +6,9 @@ namespace App\Repository;
 
 use App\Entity\Link;
 use App\Services\Link\RepositoryInterface;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\Persistence\ManagerRegistry;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-
-use function gmp_init;
-use function gmp_strval;
 
 class ShortLinkRepository extends ServiceEntityRepository implements RepositoryInterface
 {
@@ -50,7 +47,7 @@ class ShortLinkRepository extends ServiceEntityRepository implements RepositoryI
             $entityManager->persist($link);
             $entityManager->flush();
 
-            $identifier = gmp_strval(gmp_init($link->getId()), 62);
+            $identifier = \gmp_strval(\gmp_init($link->getId()), 62);
             $link->setIdentifier($identifier);
 
             $entityManager->persist($link);

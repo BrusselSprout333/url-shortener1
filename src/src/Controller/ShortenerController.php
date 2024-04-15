@@ -3,12 +3,12 @@
 namespace App\Controller;
 
 use App\Services\Link\EncoderInterface;
+use App\Services\SafeBrowsing\Api;
 use App\Validator\LinkValidator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use App\Services\SafeBrowsing\Api;
 
 class ShortenerController extends AbstractController
 {

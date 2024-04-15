@@ -7,7 +7,7 @@ $finder = PhpCsFixer\Finder::create()
     ->exclude([
         'var',
         'vendor',
-        'node_modules'
+        'node_modules',
     ])
     ->in(__DIR__);
 
@@ -15,9 +15,10 @@ $config = new PhpCsFixer\Config();
 $config
     ->setRiskyAllowed(true)
     ->setRules([
-        '@PSR1'           => true,
-        '@PSR12'          => true,
-        'psr_autoloading' => true
+        '@PSR1' => true,
+        '@PSR12' => true,
+        'psr_autoloading' => true,
+        '@Symfony' => true,
     ])
     ->setFinder($finder);
 

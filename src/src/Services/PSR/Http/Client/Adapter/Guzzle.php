@@ -9,29 +9,18 @@ use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use Throwable;
 
-class Guzzle implements ClientInterface
+readonly class Guzzle implements ClientInterface
 {
-    protected Client $guzzle;
-
-    /**
-     * Guzzle constructor.
-     * @param Client $guzzle
-     */
-    public function __construct(Client $guzzle)
-    {
-        $this->guzzle = $guzzle;
+    public function __construct(
+        private Client $guzzle
+    ) {
     }
 
     /**
      * Sends a PSR-7 request and returns a PSR-7 response.
      *
-     * @param RequestInterface $request
-     *
-     * @return ResponseInterface
-     *
-     * @throws ClientExceptionInterface If an error happens while processing the request.
+     * @throws ClientExceptionInterface if an error happens while processing the request
      */
     public function sendRequest(RequestInterface $request): ResponseInterface
     {
@@ -39,7 +28,7 @@ class Guzzle implements ClientInterface
             return $this->guzzle->send($request);
         } catch (BadResponseException $e) {
             return $e->getResponse();
-        } catch (Throwable $e) {
+        } catch (\Throwable $e) {
             throw new ClientException($e->getMessage(), $e->getCode(), $e);
         }
     }

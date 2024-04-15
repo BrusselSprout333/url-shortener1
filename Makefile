@@ -60,7 +60,7 @@ vue-build:
 
 start:
 	docker-compose up -d
-	@echo "Your application is available at: http://localhost:8081"
+	@echo "Your application is available at: http://localhost:8080"
 
 stop:
 	docker-compose stop
@@ -68,3 +68,4 @@ stop:
 clean:
 	docker-compose down -v
 	rm -rf .env ./src/.env ./src/vendor ./src/node_modules
+	git clean -fdx -e .idea

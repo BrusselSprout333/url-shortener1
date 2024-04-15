@@ -7,11 +7,10 @@ use App\Services\SafeBrowsing\Api;
 use App\Services\SafeBrowsing\Client;
 use GuzzleHttp\Psr7\Response;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-use UnexpectedValueException;
 
 class ApiTest extends KernelTestCase
 {
-    public function test_threat_matches_find_success(): void
+    public function testThreatMatchesFindSuccess(): void
     {
         $client = $this->createMock(Client::class);
         $api = new Api($client);
@@ -26,7 +25,7 @@ class ApiTest extends KernelTestCase
         $this->assertTrue($api->threatMatchesFind('https://www.google.com/'));
     }
 
-    public function test_threat_matches_find_client_exception(): void
+    public function testThreatMatchesFindClientException(): void
     {
         $clientMock = $this->createMock(Client::class);
         $api = new Api($clientMock);
@@ -37,12 +36,12 @@ class ApiTest extends KernelTestCase
             ->method('threatMatchesFind')
             ->willThrowException($exceptionMock);
 
-        $this->expectException(UnexpectedValueException::class);
+        $this->expectException(\UnexpectedValueException::class);
         $this->expectExceptionMessage('Safe browsing API client error');
         $api->threatMatchesFind('https://www.google.com/');
     }
 
-    public function test_threat_matches_find_invalid_status_code(): void
+    public function testThreatMatchesFindInvalidStatusCode(): void
     {
         $clientMock = $this->createMock(Client::class);
         $api = new Api($clientMock);
@@ -51,12 +50,12 @@ class ApiTest extends KernelTestCase
             ->method('threatMatchesFind')
             ->willReturn(new Response(500));
 
-        $this->expectException(UnexpectedValueException::class);
+        $this->expectException(\UnexpectedValueException::class);
         $this->expectExceptionMessage('Invalid safe browsing api response status code');
         $api->threatMatchesFind('https://www.google.com/');
     }
 
-    public function test_threat_matches_find_invalid_response_data(): void
+    public function testThreatMatchesFindInvalidResponseData(): void
     {
         $client = $this->createMock(Client::class);
         $api = new Api($client);
@@ -66,7 +65,7 @@ class ApiTest extends KernelTestCase
             ->with('https://www.google.com/')
             ->willReturn(new Response(body: 'Invalid JSON data'));
 
-        $this->expectException(UnexpectedValueException::class);
+        $this->expectException(\UnexpectedValueException::class);
         $this->expectExceptionMessage('Invalid safe browsing api response structure');
         $api->threatMatchesFind('https://www.google.com/');
     }

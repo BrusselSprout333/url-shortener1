@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class RedirectTest extends WebTestCase
 {
-    public function test_correct_redirect(): void
+    public function testCorrectRedirect(): void
     {
         $repository = $this->createMock(ShortLinkRepository::class);
         $repository->expects($this->once())
@@ -19,17 +19,17 @@ class RedirectTest extends WebTestCase
             ->with('15T718')
             ->willReturn('https://example.com');
 
-        $converter = new Converter('http://127.0.0.1:8081/link', $repository);
+        $converter = new Converter('http://127.0.0.1:8080/link', $repository);
 
         $controller = new RedirectController();
 
-        $response = $controller->redirect_to('15T718', $converter);
+        $response = $controller->redirectTo('15T718', $converter);
 
         $this->assertInstanceOf(RedirectResponse::class, $response);
         $this->assertEquals('https://example.com', $response->getTargetUrl());
     }
 
-    public function test_not_found_redirect(): void
+    public function testNotFoundRedirect(): void
     {
         $repository = $this->createMock(ShortLinkRepository::class);
         $repository->expects($this->once())
@@ -37,11 +37,11 @@ class RedirectTest extends WebTestCase
             ->with('15T718')
             ->willReturn(null);
 
-        $converter = new Converter('http://127.0.0.1:8081/link', $repository);
+        $converter = new Converter('http://127.0.0.1:8080/link', $repository);
 
         $controller = new RedirectController();
 
-        $response = $controller->redirect_to('15T718', $converter);
+        $response = $controller->redirectTo('15T718', $converter);
 
         $this->assertInstanceOf(Response::class, $response);
         $this->assertEquals(Response::HTTP_NOT_FOUND, $response->getStatusCode());

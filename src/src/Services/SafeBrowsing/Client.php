@@ -12,12 +12,12 @@ use Psr\Http\Message\ResponseInterface;
 
 class Client
 {
-    protected string $apiUrl = '';
+    private string $apiUrl = '';
 
     public function __construct(
-        protected readonly string $apiKey,
-        protected readonly string $clientId,
-        protected ClientInterface $httpClient
+        private readonly string $apiKey,
+        private readonly string $clientId,
+        private readonly ClientInterface $httpClient
     ) {
         $this->apiUrl = sprintf(
             'https://safebrowsing.googleapis.com/v4/threatMatches:find?key=%s',
@@ -35,20 +35,20 @@ class Client
                 'POST',
                 $this->apiUrl,
                 [
-                    'client'     => [
-                        'clientId'      => $this->clientId,
+                    'client' => [
+                        'clientId' => $this->clientId,
                         'clientVersion' => '1.0.0',
                     ],
                     'threatInfo' => [
-                        'threatTypes'      => [
+                        'threatTypes' => [
                             'MALWARE',
                             'SOCIAL_ENGINEERING',
                             'UNWANTED_SOFTWARE',
-                            'POTENTIALLY_HARMFUL_APPLICATION'
+                            'POTENTIALLY_HARMFUL_APPLICATION',
                         ],
-                        'platformTypes'    => ['PLATFORM_TYPE_UNSPECIFIED'],
+                        'platformTypes' => ['PLATFORM_TYPE_UNSPECIFIED'],
                         'threatEntryTypes' => ['URL'],
-                        'threatEntries'    => array_map(static fn ($url) => ['url' => $url], $urls),
+                        'threatEntries' => array_map(static fn ($url) => ['url' => $url], $urls),
                     ],
                 ]
             );
@@ -57,16 +57,11 @@ class Client
     }
 
     /**
-     * Creates PSR-7 Request
-     *
-     * @param string $method
-     * @param string $url
-     * @param array $data
-     * @return RequestInterface
+     * Creates PSR-7 Request.
      */
     protected function createRequest(string $method, string $url, array $data = []): RequestInterface
     {
-        /** @noinspection JsonEncodingApiUsageInspection */
+        /* @noinspection JsonEncodingApiUsageInspection */
         return new Request(
             strtoupper($method),
             $url,

@@ -9,23 +9,23 @@ use Symfony\Component\HttpFoundation\Response as ResponseCodes;
 
 class ValidatorTest extends KernelTestCase
 {
-    public function test_validate_link_with_valid_url(): void
+    public function testValidateLinkWithValidUrl(): void
     {
         $validator = new LinkValidator();
 
         $request = new Request(
-            content:json_encode(['url' => 'https://www.google.com/'])
+            content: json_encode(['url' => 'https://www.google.com/'])
         );
 
         $this->assertEquals('https://www.google.com/', $validator->validateLink($request));
     }
 
-    public function test_validate_link_with_missing_url(): void
+    public function testValidateLinkWithMissingUrl(): void
     {
         $validator = new LinkValidator();
 
         $request = new Request(
-            content:json_encode(['url' => ''])
+            content: json_encode(['url' => ''])
         );
 
         $this->expectException(\JsonException::class);
@@ -35,12 +35,12 @@ class ValidatorTest extends KernelTestCase
         $validator->validateLink($request);
     }
 
-    public function test_validate_link_with_invalid_url_format(): void
+    public function testValidateLinkWithInvalidUrlFormat(): void
     {
         $validator = new LinkValidator();
 
         $request = new Request(
-            content:json_encode(['url' => 'invalid_url'])
+            content: json_encode(['url' => 'invalid_url'])
         );
 
         $this->expectException(\JsonException::class);
